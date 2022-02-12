@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useEffect, useState, useRef } from 'react'
+import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
 import { hasEthereum } from '../utils/ethereum'
 import Greeter from '../src/artifacts/contracts/Greeter.sol/Greeter.json'
@@ -10,25 +11,27 @@ export default function Home() {
   const [newGreetingMessage, setNewGreetingMessageState] = useState('')
   const [connectedWalletAddress, setConnectedWalletAddressState] = useState('')
   const newGreetingInputRef = useRef();
+  const router = useRouter()
+
 
   // If wallet is already connected...
   useEffect( () => {
-    if(! hasEthereum()) {
-      setConnectedWalletAddressState(`MetaMask unavailable`)
-      return
-    }
-    async function setConnectedWalletAddress() {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const signer = provider.getSigner()
-      try {
-        const signerAddress = await signer.getAddress()
-        setConnectedWalletAddressState(`Connected wallet: ${signerAddress}`)
-      } catch {
-        setConnectedWalletAddressState('No wallet connected')
-        return;
-      }
-    }
-    setConnectedWalletAddress();
+    // if(! hasEthereum()) {
+    //   setConnectedWalletAddressState(`MetaMask unavailable`)
+    //   return
+    // }
+    // async function setConnectedWalletAddress() {
+    //   const provider = new ethers.providers.Web3Provider(window.ethereum);
+    //   const signer = provider.getSigner()
+    //   try {
+    //     const signerAddress = await signer.getAddress()
+    //     setConnectedWalletAddressState(`Connected wallet: ${signerAddress}`)
+    //   } catch {
+    //     setConnectedWalletAddressState('No wallet connected')
+    //     return;
+    //   }
+    // }
+    // setConnectedWalletAddress();
   },[])
   
   // Request access to MetaMask account
@@ -75,10 +78,26 @@ export default function Home() {
     setNewGreetingState('')
   }
 
+  async function connectWallet() {
+    if ( ! hasEthereum() ) {
+      setConnectedWalletAddressState(`MetaMask unavailable`)
+      return
+    }
+
+    await requestAccount()
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner()
+    const signerAddress = await signer.getAddress()
+    setConnectedWalletAddressState(`Connected wallet: ${signerAddress}`)
+    router.push('/makeProfile')
+
+
+  }
+
   return (
     <div className="max-w-lg mt-36 mx-auto text-center px-4">
       <Head>
-        <title>Solidity Next.js Starter</title>
+        <title>Fuse Pass</title>
         <meta name="description" content="Interact with a simple smart contract from the client-side." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -91,10 +110,10 @@ export default function Home() {
         ) : (
           <>
             <h1 className="text-4xl font-semibold mb-8">
-              Solidity Next.js Starter
+              Fuse Pass 
             </h1>
             <div className="space-y-8">
-                <div className="flex flex-col space-y-4">
+                {/* <div className="flex flex-col space-y-4">
                   <input
                     className="border p-4 w-100 text-center"
                     placeholder="A fetched greeting will show here"
@@ -107,8 +126,8 @@ export default function Home() {
                     >
                       Fetch greeting from the blockchain
                     </button>
-                </div>
-                <div className="space-y-8">
+                </div> */}
+                {/* <div className="space-y-8">
                   <div className="flex flex-col space-y-4">
                     <input
                       className="border p-4 text-center"
@@ -126,6 +145,14 @@ export default function Home() {
                       { newGreetingMessage && <span className="text-sm text-gray-500 italic">{newGreetingMessage}</span> }
                     </div>
                   </div>
+                </div> */}
+                <div>
+                  <button
+                  className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md"
+                  onClick={connectWallet}
+                  >
+                    Connect wallet
+                  </button>
                 </div>
                 <div className="h-4">
                   { connectedWalletAddress && <p className="text-md">{connectedWalletAddress}</p> }
