@@ -27,6 +27,9 @@ yarn-error.log*
 # env file
 .env
 
+package-lock.json
+yarn.lock
+
 # vercel
 .vercel
 
@@ -35,3 +38,6 @@ node_modules
 #Hardhat files
 cache
 artifacts
+
+/.idea
+/.idea/
