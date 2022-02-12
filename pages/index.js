@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { useEffect, useState, useRef } from 'react'
+import { useRouter } from 'next/router'
 import { ethers } from 'ethers'
 import { hasEthereum } from '../utils/ethereum'
 import Fuse from '../src/artifacts/contracts/Fuse.sol/Fuse.json'
@@ -9,6 +10,7 @@ export default function Home() {
   const [newGithubUsername, setNewGithubUsernameState] = useState('')
   const [newInfoMessage, setInfoMessageState] = useState('')
   const [connectedWalletAddress, setConnectedWalletAddressState] = useState('')
+  const router = useRouter()
   const [profiles, setProfiles] = useState('')
   const [currentProfile, setCurrentProfile] = useState('')
   const newGithubUsernameInputRef = useRef();
@@ -116,10 +118,26 @@ export default function Home() {
     setNewGithubUsernameState('')
   }
 
+  async function connectWallet() {
+    if ( ! hasEthereum() ) {
+      setConnectedWalletAddressState(`MetaMask unavailable`)
+      return
+    }
+
+    await requestAccount()
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner()
+    const signerAddress = await signer.getAddress()
+    setConnectedWalletAddressState(`Connected wallet: ${signerAddress}`)
+    router.push('/makeProfile')
+
+
+  }
+
   return (
     <div className="max-w-lg mt-36 mx-auto text-center px-4">
       <Head>
-        <title>Solidity Next.js Starter</title>
+        <title>Fuse Pass</title>
         <meta name="description" content="Interact with a simple smart contract from the client-side." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -132,7 +150,7 @@ export default function Home() {
         ) : (
           <>
             <h1 className="text-4xl font-semibold mb-8">
-              Solidity Next.js Starter
+              Fuse Pass
             </h1>
             <p>Profiles: {profiles}</p>
             <p>Current Profile: {currentProfile}</p>
@@ -169,6 +187,14 @@ export default function Home() {
                       { newInfoMessage && <span className="text-sm text-gray-500 italic">{newInfoMessage}</span> }
                     </div>
                   </div>
+                </div> */}
+                <div>
+                  <button
+                  className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md"
+                  onClick={connectWallet}
+                  >
+                    Connect wallet
+                  </button>
                 </div>
                 <div className="h-4">
                   { connectedWalletAddress && <p className="text-md">{connectedWalletAddress}</p> }
