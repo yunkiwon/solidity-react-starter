@@ -39,4 +39,4 @@ node_modules
 cache
 artifacts
 
-.idea
+/.idea
