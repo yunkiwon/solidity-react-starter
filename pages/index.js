@@ -28,7 +28,7 @@ export default function Home() {
     }
     setConnectedWalletAddress();
     fetchRegisteredProfiles();
-  },[currentProfile])
+  },[])
 
   // Request access to MetaMask account
   async function requestAccount() {
