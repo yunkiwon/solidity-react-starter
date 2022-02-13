@@ -84,44 +84,10 @@ export default function Home() {
             </h1>
             <p>Profiles: {profiles}</p>
             <div className="space-y-8">
-                {/*<div className="flex flex-col space-y-4">*/}
-                {/*  <input*/}
-                {/*    className="border p-4 w-100 text-center"*/}
-                {/*    placeholder="A fetched github username will show here"*/}
-                {/*    value={connectedAddressGithub}*/}
-                {/*    disabled*/}
-                {/*  />*/}
-                {/*  <button*/}
-                {/*      className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md w-full"*/}
-                {/*      onClick={fetchConnectedWalletProfile}*/}
-                {/*    >*/}
-                {/*      Fetch github username from the blockchain*/}
-                {/*    </button>*/}
-                {/*</div>*/}
-                {/*<div className="space-y-8">*/}
-                {/*  <div className="flex flex-col space-y-4">*/}
-                {/*    <input*/}
-                {/*      className="border p-4 text-center"*/}
-                {/*      onChange={ e => setNewGithubUsernameState(e.target.value)}*/}
-                {/*      placeholder="Write a new github username"*/}
-                {/*      ref={newGithubUsernameInputRef}*/}
-                {/*    />*/}
-                {/*    <button*/}
-                {/*      className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md"*/}
-                {/*      onClick={setGithubUsername}*/}
-                {/*    >*/}
-                {/*      Set new github username on the blockchain*/}
-                {/*    </button>*/}
-                {/*    <div className="h-2">*/}
-                {/*      { newInfoMessage && <span className="text-sm text-gray-500 italic">{newInfoMessage}</span> }*/}
-                {/*    </div>*/}
-                {/*  </div>*/}
-                {/*</div>*/}
                 <div>
                   <button
                   className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md"
-                  onClick={connectWallet}
-                  >
+                  onClick={connectWallet}>
                     Connect wallet
                   </button>
                 </div>
