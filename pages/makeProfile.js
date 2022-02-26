@@ -5,8 +5,9 @@ import { GithubProvider } from "../utils/githubProvider.tsx"
 
 
 // user is directed to this page for minting, and setting initial username etc before official mint 
-// if user has minted already, we redirect them to a different profile page that has their shit on it 
-// 
+// if user has minted already, we redirect them to a different profile page that has their stuff on it 
+// if user 
+
 export default function makeProfile() {
     const [connectedWalletAddress, setConnectedWalletAddressState] = useState('')
     const [githubAddress, setGithubAddress] = useState('')
@@ -33,6 +34,8 @@ export default function makeProfile() {
         setConnectedWalletAddress();
       },[])
 
+
+
 async function getGithub(){
     //this should later trigger an oauth flow so that user has to connect github rather than hardcoded user profile 
     //githubprovider.getUser 
@@ -42,6 +45,10 @@ async function getGithub(){
     )
 }
 
+async function connectGithub(){
+    GithubProvider.authenticate()
+}
+
 
   return (
     <div>
@@ -49,10 +56,49 @@ async function getGithub(){
             { connectedWalletAddress && <p className="text-md">Connected Wallet: {connectedWalletAddress}</p> }
         </div>
         <div className="m-8">
-            <button onClick={getGithub} className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md">
+            <button onClick={connectGithub} className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md">
                 Connect your GitHub
             </button>
         </div>
+        <div className="flex flex-col space-y-4">
+                  <input
+                    className="border p-4 w-100 text-center"
+                    placeholder="A fetched github username will show here"
+                    value={connectedAddressGithub}
+                    disabled
+                  />
+                  <button
+                      className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md w-full"
+                      // onClick={fetchConnectedAddressGithub}
+                    >
+                      Fetch github username from the blockchain
+                    </button>
+        </div>
+                <div className="space-y-8">
+                  <div className="flex flex-col space-y-4">
+                    <input
+                      className="border p-4 text-center"
+                      onChange={ e => setNewGithubUsernameState(e.target.value)}
+                      placeholder="Write a new github username"
+                      ref={newGithubUsernameInputRef}
+                    />
+                    <button
+                      className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md"
+                      onClick={setGithubUsername}
+                    >
+                      Set new github username on the blockchain
+                    </button>
+                    <button
+                      className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md"
+                      onClick={setGithubUsername}
+                    >
+                      Connect your GitHub here 
+                    </button>
+                    <div className="h-2">
+                      { newInfoMessage && <span className="text-sm text-gray-500 italic">{newInfoMessage}</span> }
+                    </div>
+                  </div>
+                </div> 
     </div>
   )
 }

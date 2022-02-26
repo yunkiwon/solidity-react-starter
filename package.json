@@ -30,5 +30,21 @@
     "hardhat": "^2.5.0",
     "postcss": "^8.3.6",
     "tailwindcss": "^2.2.7"
-  }
+  },
+  "description": "[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ftomhirst%2Fsolidity-nextjs-starter)",
+  "main": "hardhat.config.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yunkiwon/solidity-react-starter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yunkiwon/solidity-react-starter/issues"
+  },
+  "homepage": "https://github.com/yunkiwon/solidity-react-starter#readme"
 }

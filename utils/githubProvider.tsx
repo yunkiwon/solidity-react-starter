@@ -23,11 +23,12 @@ export class GithubProvider {
           size: obj.size,
         };
         result.push(temp);
-        console.log(temp);
+        // console.log(temp);
       }
     } catch {
       //error checking here
     }
     return result;
   }
+
 }
