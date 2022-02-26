@@ -2,15 +2,15 @@ import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
 import {ensInfo} from "./types";
 
 export class ENSProvider {
-  static async getRepo(userName: string | string[]): Promise<ensInfo> {
-    const client = new ApolloClient({
-      uri: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
-      cache: new InMemoryCache(),
-    });
+    static async getRepo(userName: string | string[]): Promise<ensInfo> {
+        const client = new ApolloClient({
+            uri: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
+            cache: new InMemoryCache(),
+        });
 
-    const { data } = await client.query({
-      // hardcoded to point to my real ENS for now
-      query: gql`
+        const {data} = await client.query({
+            // hardcoded to point to my real ENS for now
+            query: gql`
     query GetEnsName{
       domains(first: 5,
       where: {
@@ -20,13 +20,13 @@ export class ENSProvider {
       }
     }
   `
-    });
-    let ens: ensInfo
-    if (data == null) {
-      return ens
+        });
+        let ens: ensInfo
+        if (data == null) {
+            return ens
+        }
+        return {
+            name: data.domains[0].name
+        }
     }
-    return {
-      name: data.domains[0].name
-    }
-  }
 }

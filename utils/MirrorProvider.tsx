@@ -8,7 +8,7 @@ export class MirrorProvider {
             cache: new InMemoryCache(),
         });
 
-        const { data } = await client.query({
+        const {data} = await client.query({
             // hardcoded to point to my real ENS for now
             variables: {
                 projectAddress: "0x8E907c51f07DFdc02C32835768DE73091A2078B0"

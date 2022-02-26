@@ -3,7 +3,7 @@ export type githubInfo = {
     html_url: string;
     description: string;
     size: number;
-  };
+};
 
 export type ensInfo = {
     name: string;
