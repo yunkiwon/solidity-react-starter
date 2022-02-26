@@ -4,4 +4,7 @@ export type githubInfo = {
     description: string;
     size: number;
   };
-  
+
+export type ensInfo = {
+    name: string;
+};

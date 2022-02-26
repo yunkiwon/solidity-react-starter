@@ -4,6 +4,7 @@ import {ethers} from "ethers";
 import {useState, useRef, useEffect} from "react";
 import Fuse from '../src/artifacts/contracts/Fuse.sol/Fuse.json'
 import {GithubProvider} from "../utils/githubProvider.tsx";
+import {ENSProvider} from "../utils/ENSProvider.tsx";
 
 export default function PostPage() {
 
@@ -79,6 +80,12 @@ export default function PostPage() {
         )
     }
 
+    async function getEns(){
+        ENSProvider.getRepo(router.query.userAddress).then(
+            (res) => console.log(res)
+        )
+    }
+
     return (
         <div className="max-w-lg mt-36 mx-auto text-center px-4">
             <h1 className="text-4xl font-semibold mb-8">Welcome! #{router.query.userAddress}</h1>
@@ -113,6 +120,9 @@ export default function PostPage() {
                       </button>
                       <button onClick={getGithub} className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md">
                           Connect your GitHub
+                      </button>
+                      <button onClick={getEns} className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md">
+                          Show us your ENS name
                       </button>
                   </div>
                 </div>
