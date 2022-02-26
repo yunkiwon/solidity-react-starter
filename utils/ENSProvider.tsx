@@ -1,5 +1,5 @@
 import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
-import {ensInfo, githubInfo} from "./types";
+import {ensInfo} from "./types";
 
 export class ENSProvider {
   static async getRepo(userName: string | string[]): Promise<ensInfo> {
@@ -21,10 +21,12 @@ export class ENSProvider {
     }
   `
     });
-    const temp: ensInfo = {
+    let ens: ensInfo
+    if (data == null) {
+      return ens
+    }
+    return {
       name: data.domains[0].name
-    };
-    console.log(temp);
-    return temp
+    }
   }
 }

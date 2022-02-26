@@ -10,7 +10,7 @@ export class GithubProvider {
       "https://api.github.com/users/" + userName + "/repos",
       options
     );
-    const result: githubInfo[] = new Array();
+    const result: githubInfo[] = [];
     try {
       const body = await response.json();
       for (var i = 0; i < body.length; i++) {

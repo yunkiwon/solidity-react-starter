@@ -5,6 +5,7 @@ import {useState, useRef, useEffect} from "react";
 import Fuse from '../src/artifacts/contracts/Fuse.sol/Fuse.json'
 import {GithubProvider} from "../utils/githubProvider.tsx";
 import {ENSProvider} from "../utils/ENSProvider.tsx";
+import {MirrorProvider} from "../utils/MirrorProvider.tsx";
 
 export default function PostPage() {
 
@@ -76,13 +77,25 @@ export default function PostPage() {
         //githubprovider.getUser
         //stores to state, then on mint it's saved along with the user's ethereum address to the mainnet
         GithubProvider.getRepo(connectedAddressGithub).then(
-            (res) => console.log(res)
+            (res) => {
+                console.log(res)
+            }
         )
     }
 
     async function getEns(){
         ENSProvider.getRepo(router.query.userAddress).then(
-            (res) => console.log(res)
+            (res) => {
+                console.log(res)
+            }
+        )
+    }
+
+    async function getMirror(){
+        MirrorProvider.getRepo(router.query.userAddress).then(
+            (res) => {
+                console.log(res)
+            }
         )
     }
 
