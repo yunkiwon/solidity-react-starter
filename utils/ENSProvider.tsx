@@ -2,7 +2,7 @@ import {ApolloClient, gql, InMemoryCache} from "@apollo/client";
 import {ensInfo} from "./types";
 
 export class ENSProvider {
-    static async getRepo(userName: string | string[]): Promise<ensInfo> {
+    static async getRepo(userName: string[]): Promise<ensInfo> {
         const client = new ApolloClient({
             uri: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
             cache: new InMemoryCache(),

@@ -1,12 +1,13 @@
 import {useRouter} from "next/router";
 import {hasEthereum} from "../utils/ethereum";
 import {ethers} from "ethers";
-import {Card, Text, Heading} from 'degen'
+import {Card, Text, Heading, Tag} from 'degen'
 import {useState, useRef, useEffect} from "react";
 import Fuse from '../src/artifacts/contracts/Fuse.sol/Fuse.json'
 import {GithubProvider} from "../utils/githubProvider.tsx";
 import {ENSProvider} from "../utils/ENSProvider.tsx";
 import {MirrorProvider} from "../utils/MirrorProvider.tsx";
+import {ZapperProvider} from "../utils/ZapperProvider.tsx";
 
 export default function PostPage() {
 
@@ -18,6 +19,7 @@ export default function PostPage() {
     const [repos, setRepos] = useState('')
     const [ens, setEns] = useState('')
     const [mirrorEntries, setMirrorEntries] = useState('')
+    const [tokenHoldings, setTokenHoldings] = useState('')
 
     const router = useRouter();
 
@@ -59,6 +61,14 @@ export default function PostPage() {
             (res) => setEns(res)
         ).then(() => {
             console.log(ens)
+        })
+    }
+
+    async function getTokenHoldings() {
+        ZapperProvider.getRepo(router.query.userAddress).then(
+            (res) => setTokenHoldings(res)
+        ).then(() => {
+            console.log(tokenHoldings)
         })
     }
 
@@ -119,8 +129,6 @@ export default function PostPage() {
         const contract = new ethers.Contract(process.env.NEXT_PUBLIC_FUSE_ADDRESS, Fuse.abi, signer)
         const transaction = await contract.setUserProfileGithub(router.query.userAddress, newGithubUsername)
         await transaction.wait()
-        // setInfoMessageState(`Github username updated to ${newGithubUsername} from ${connectedAddressGithub}.`)
-        // newGithubUsernameInputRef.current.value = ''
         setNewGithubUsernameState('')
     }
 
@@ -131,6 +139,11 @@ export default function PostPage() {
                 <div className="flex flex-col space-y-4">
                 </div>
                 <h4 className="text-2xl font-semibold mb-8">GitHub</h4>
+                {/*<a href={`https://medium.com/m/oauth/authorize?client_id=233be20762be1e3667488ce221bdd40804aac3aaba091048b5c526236fe5f07bc&scope=basicProfile,listPublications&state=authenticate&response_type=code&redirect_uri=${redirectURL}`}>*/}
+                {/*    <button className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md">*/}
+                {/*        Connect your Medium*/}
+                {/*    </button>*/}
+                {/*</a>*/}
                 <div className="space-y-8">
                     <div className="flex flex-col space-y-4">
                         {repos.length > 0 ?
@@ -174,6 +187,7 @@ export default function PostPage() {
                                         <Card padding="6" shadow>
                                             <Heading>{mirrorEntry.title}</Heading>
                                             <Text>{mirrorEntry.body}</Text>
+                                            <Tag>{mirrorEntry.timestamp} days ago</Tag>
                                         </Card>
                                     </div>
                                 ))
@@ -183,6 +197,22 @@ export default function PostPage() {
                             <button onClick={getMirror}
                                     className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md">
                                 Show us your Mirror
+                            </button>
+                        }
+                    </div>
+                    <h4 className="text-2xl font-semibold mb-8">Holdings</h4>
+                    <div className="flex flex-col space-y-4">
+                        {tokenHoldings.length > 0 ?
+                            <div>
+                                {tokenHoldings.map(t => (
+                                    <div key={t.symbol}><p>{t.symbol}: {t.balance} @ ${t.price} / {t.symbol}</p></div>
+                                ))
+                                }
+                            </div>
+                            :
+                            <button onClick={getTokenHoldings}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white py-4 px-8 rounded-md">
+                                Click to display token holdings!
                             </button>
                         }
                     </div>

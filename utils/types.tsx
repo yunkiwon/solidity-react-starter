@@ -17,3 +17,9 @@ export type mirrorInfo = {
     projectName: string,
     projectDescription: string,
 };
+
+export type holdingsInfo = {
+    symbol: string,
+    price: number,
+    balance: number,
+}
