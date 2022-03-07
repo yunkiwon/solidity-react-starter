@@ -7,7 +7,7 @@ export class GithubProvider {
             headers: {Accept: "application/json"},
         };
         const response = await fetch(
-            "https://api.github.com/users/" + userName + "/repos",
+            process.env.FUSE_API_URL + "github/" + userName,
             options
         );
         const result: githubInfo[] = [];

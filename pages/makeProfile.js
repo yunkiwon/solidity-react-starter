@@ -1,7 +1,7 @@
 import {useEffect, useState, useRef} from 'react'
 import {ethers} from 'ethers'
 import {hasEthereum} from '../utils/ethereum'
-import {GithubProvider} from "../utils/githubProvider.tsx"
+import {GithubProvider} from "../utils/GithubProvider.tsx"
 
 
 // user is directed to this page for minting, and setting initial username etc before official mint

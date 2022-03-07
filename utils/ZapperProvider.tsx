@@ -1,22 +1,24 @@
-import {githubInfo, holdingsInfo} from "./types";
+import {holdingsInfo} from "./types";
 
 export class ZapperProvider {
     static async getRepo(address: string | string[]): Promise<holdingsInfo[]> {
         const options = {
             method: "GET",
-            headers: {Accept: "application/json"},
+            headers: {
+                Accept: "application/json",
+            },
         };
+        console.log(options.headers)
         const response = await fetch(
-            "https://api.zapper.fi/v1/protocols/tokens/balances?addresses%5B%5D=" + address + "&api_key=96e0cc51-a62e-42ca-acee-910ea7d2a241",
+            process.env.NEXT_PUBLIC_BACKEND_URL + "zapper/" + address,
             options
         );
         const result: holdingsInfo[] = [];
         try {
             const body = await response.json();
-            const list = body[Object.keys(body)[0]]['products'][0]['assets']
-            for (let i = 0; i < list.length; i++) {
-                const obj = list[i];
-
+            let ree = body as holdingsInfo[]
+            for (let i = 0; i < body.length; i++) {
+                const obj = body[i];
                 const temp: holdingsInfo = {
                     symbol: obj.symbol,
                     price: obj.price,

@@ -4,7 +4,7 @@ import {ethers} from "ethers";
 import {Card, Text, Heading, Tag} from 'degen'
 import {useState, useRef, useEffect} from "react";
 import Fuse from '../src/artifacts/contracts/Fuse.sol/Fuse.json'
-import {GithubProvider} from "../utils/githubProvider.tsx";
+import {GithubProvider} from "../utils/GithubProvider.tsx";
 import {ENSProvider} from "../utils/ENSProvider.tsx";
 import {MirrorProvider} from "../utils/MirrorProvider.tsx";
 import {ZapperProvider} from "../utils/ZapperProvider.tsx";
@@ -20,6 +20,7 @@ export default function PostPage() {
     const [ens, setEns] = useState('')
     const [mirrorEntries, setMirrorEntries] = useState('')
     const [tokenHoldings, setTokenHoldings] = useState('')
+    const [badges, setBadges] = useState([])
 
     const router = useRouter();
 
